@@ -1,4 +1,4 @@
-# Be Steady
+# be steady
 
 A results companion for Bodywise customers, built for the Mosaic Fellowship Builder Round.
 
