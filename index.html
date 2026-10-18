@@ -1,0 +1,772 @@
+<title>Be Steady</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@400;500;600&display=swap">
+<style>
+/* Layout: a blue "shelf" hero holding the product line, then the app (left) beside the case for it (right); one column on phones, app first.
+   Motif: Bodywise's pack label, a blue band with a ruled monospace "TO | benefit" table, and the round "3m" results badge. */
+:root {
+  --blue: #1d4fb8;
+  --blue-deep: #143a8c;
+  --blue-tint: #eef3fd;
+  --blue-line: #c7d5f1;
+  --paper: #ffffff;
+  --bg: #ffffff;
+  --ink: #0f1f45;
+  --muted: #56648a;
+  --on-blue: #ffffff;
+  --on-blue-soft: #c9d7f6;
+  --good: #1f7a54;
+  --good-tint: #e0f2ea;
+  --warn: #9a5a00;
+  --warn-tint: #fdf0dc;
+  --bad: #b23434;
+  --bad-tint: #fbe4e4;
+  --head: #1d4fb8;
+  --pk-body: #ffffff;
+  --pk-shade: #e4ebf8;
+  --pk-band: #1d4fb8;
+  --pk-text: #ffffff;
+  color-scheme: light;
+  --display: "Cormorant Garamond", "Cormorant", Garamond, "Iowan Old Style", Georgia, serif;
+  --body: "Jost", "Futura", "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "Jost", "Futura", "Avenir Next", "Segoe UI", sans-serif;
+}
+/* Single bright theme by choice: white page, Bodywise blue accents, in every viewer theme. */
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: -0.005em; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.mono { font-family: var(--mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.num { font-variant-numeric: tabular-nums; }
+.eyebrow { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* ---------- Hero shelf ---------- */
+.hero { background: var(--blue); background: linear-gradient(180deg, #1d4fb8 0%, #2c63d6 100%); color: var(--on-blue); overflow: hidden; }
+.hero-in { max-width: 1120px; margin: 0 auto; padding-block: 28px 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 24px; align-items: end; }
+@media (max-width: 860px) { .hero-in { grid-template-columns: minmax(0, 1fr); } }
+.hero-copy { padding-bottom: 36px; display: flex; flex-direction: column; gap: 14px; }
+.hero .eyebrow { color: var(--on-blue-soft); }
+.hero h1 { font-size: clamp(64px, 11vw, 120px); line-height: 0.9; letter-spacing: -0.01em; font-weight: 500; font-style: italic; }
+.hero h1 sup { font-family: var(--mono); font-style: normal; font-size: 12px; letter-spacing: 0.16em; vertical-align: 3.4em; margin-left: 6px; color: var(--on-blue-soft); }
+.hero .lede { font-size: 17px; color: var(--on-blue-soft); max-width: 46ch; }
+.hero .lede b { color: var(--on-blue); font-weight: 600; }
+.label-row { display: inline-grid; grid-auto-flow: column; border: 1px solid rgba(255,255,255,.45); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; width: max-content; max-width: 100%; }
+.label-row span { padding: 5px 10px; border-left: 1px solid rgba(255,255,255,.45); white-space: nowrap; }
+.label-row span:first-child { border-left: none; font-weight: 500; }
+@media (max-width: 480px) { .label-row { display: flex; flex-wrap: wrap; border: none; gap: 6px; } .label-row span { border: 1px solid rgba(255,255,255,.45); } .label-row span:first-child { border-left: 1px solid rgba(255,255,255,.45); } }
+.shelf { position: relative; display: flex; align-items: flex-end; justify-content: center; gap: clamp(6px, 1.6vw, 18px); padding: 0 8px; min-width: 0; }
+.shelf::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 22px; background: rgba(255,255,255,.12); border-top: 1px solid rgba(255,255,255,.35); }
+.shelf figure { margin: 0 0 14px; position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; flex: 0 1 auto; min-width: 0; }
+.shelf svg { display: block; height: auto; filter: drop-shadow(0 10px 14px rgba(5, 18, 60, .35)); }
+@media (prefers-reduced-motion: no-preference) {
+  .shelf figure { animation: rise .7s cubic-bezier(.2,.8,.2,1) both; }
+  .shelf figure:nth-child(2) { animation-delay: .06s } .shelf figure:nth-child(3) { animation-delay: .12s } .shelf figure:nth-child(4) { animation-delay: .18s }
+  .shelf figure:nth-child(5) { animation-delay: .24s } .shelf figure:nth-child(6) { animation-delay: .3s } .shelf figure:nth-child(7) { animation-delay: .36s }
+  @keyframes rise { from { transform: translateY(18px); } to { transform: none; } }
+}
+
+/* ---------- Page grid ---------- */
+.main { max-width: 1120px; margin: 0 auto; padding-block: 32px 56px; display: grid; grid-template-columns: minmax(0, 430px) minmax(0, 1fr); gap: 48px; align-items: start; }
+@media (max-width: 860px) { .main { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-top: 20px; } }
+
+/* ---------- App ---------- */
+.app { background: var(--paper); border: 1px solid var(--blue-line); border-radius: 22px; overflow: hidden; position: sticky; top: max(16px, env(safe-area-inset-top, 0px)); box-shadow: 0 20px 50px -24px rgba(29, 79, 184, .25); }
+@media (max-width: 860px) { .app { position: static; margin-top: -8px; } }
+.app-head { background: var(--head); color: var(--on-blue); padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.app-head .name { font-family: var(--display); font-weight: 500; font-style: italic; font-size: 30px; line-height: 1; }
+.app-head .name small { display: block; font-style: normal; font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--on-blue-soft); margin-top: 4px; }
+.chip-btn { background: transparent; color: var(--on-blue); border: 1px solid rgba(255,255,255,.55); border-radius: 999px; padding: 6px 14px; font-size: 13px; font-family: var(--body); }
+.demo { background: var(--blue-tint); padding: 9px 16px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; border-bottom: 1px solid var(--blue-line); }
+.demo b { color: var(--blue); }
+.link { background: none; border: none; padding: 0; color: var(--blue); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.tabs { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--blue-line); }
+.tabs button { background: none; border: none; padding: 12px 2px 11px; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); border-bottom: 2px solid transparent; }
+.tabs button[aria-selected="true"] { color: var(--blue); border-bottom-color: var(--blue); }
+.panel { padding: 18px 16px 20px; display: flex; flex-direction: column; gap: 16px; min-height: 560px; }
+
+/* product card */
+.pcard { border: 1px solid var(--blue-line); border-radius: 16px; overflow: hidden; }
+.pcard-top { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 14px; background: var(--blue-tint); }
+.pcard-top svg { width: 64px; height: 86px; display: block; }
+.pcard-top h2 { font-size: 21px; line-height: 1.1; }
+.pcard-top .eyebrow { margin-bottom: 4px; }
+.badge { width: 62px; height: 62px; border-radius: 50%; border: 1.5px solid var(--blue); color: var(--blue); display: grid; place-items: center; text-align: center; line-height: 1; background: var(--paper); }
+.badge b { font-family: var(--display); font-weight: 600; font-size: 26px; display: block; }
+.badge span { font-family: var(--mono); font-size: 8.5px; letter-spacing: .12em; letter-spacing: .04em; }
+.tags { display: grid; grid-template-columns: auto 1fr 1fr; border-top: 1px solid var(--blue-line); border-bottom: 1px solid var(--blue-line); font-family: var(--mono); font-size: 11.5px; letter-spacing: .04em; }
+.tags span { padding: 6px 10px; border-left: 1px solid var(--blue-line); min-width: 0; }
+.tags span:first-child { border-left: none; color: var(--blue); font-weight: 500; }
+.pcard-body { padding: 14px; display: flex; flex-direction: column; gap: 14px; }
+.weeks { display: grid; gap: 3px; }
+.weeks i { height: 10px; border-radius: 2px; background: var(--blue-tint); border: 1px solid var(--blue-line); }
+.weeks i.done { background: var(--blue); border-color: var(--blue); }
+.weeks i.now { background: var(--paper); border: 2px solid var(--blue); }
+.weeks i.first { box-shadow: 0 -5px 0 -2px var(--good); }
+.weeks-legend { display: flex; justify-content: space-between; gap: 8px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 6px; }
+.weeks-legend .g { color: var(--good); }
+.expect strong { display: block; font-family: var(--display); font-weight: 600; font-size: 21px; line-height: 1.15; margin-bottom: 2px; }
+.expect p { font-size: 14px; color: var(--muted); }
+
+.steps { display: flex; flex-direction: column; gap: 8px; }
+.step { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 12px; align-items: start; padding: 12px; border: 1px solid var(--blue-line); border-radius: 12px; cursor: pointer; background: var(--paper); }
+.step input { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--blue); }
+.step .t { font-weight: 600; font-size: 14.5px; }
+.step .d { font-size: 13px; color: var(--muted); display: block; margin-top: 2px; }
+.step .pair { font-family: var(--mono); font-size: 10.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--blue); border: 1px solid var(--blue-line); border-radius: 4px; padding: 1px 6px; margin-left: 6px; vertical-align: 2px; white-space: nowrap; }
+.step.done { background: var(--blue-tint); border-color: transparent; }
+.step.done .t { text-decoration: line-through; text-decoration-color: var(--blue); }
+.dots { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.dots span { display: flex; flex-direction: column; align-items: center; gap: 4px; font-family: var(--mono); font-size: 10.5px; color: var(--muted); }
+.dots b { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--blue-line); display: grid; place-items: center; font-size: 12px; color: var(--on-blue); }
+.dots b.on { background: var(--blue); border-color: var(--blue); }
+.dots b.today { box-shadow: 0 0 0 3px var(--blue-tint); border-color: var(--blue); }
+
+.note { border-radius: 12px; padding: 12px 14px; font-size: 13.5px; display: flex; flex-direction: column; gap: 3px; border: 1px solid transparent; }
+.note b { font-weight: 700; font-size: 14px; }
+.note.info { background: var(--blue-tint); }
+.note.good { background: var(--good-tint); }
+.note.good b { color: var(--good); }
+.note.warn { background: var(--warn-tint); }
+.note.warn b { color: var(--warn); }
+.note.bad { background: var(--bad-tint); }
+.note.bad b { color: var(--bad); }
+
+.seg { display: flex; gap: 6px; flex-wrap: wrap; }
+.seg button { border: 1px solid var(--blue-line); background: var(--paper); border-radius: 999px; padding: 6px 12px; font-size: 13px; }
+.seg button[aria-pressed="true"] { background: var(--blue); color: var(--on-blue); border-color: var(--blue); }
+.sec-title h2 { font-size: 24px; line-height: 1.2; margin-top: 4px; }
+
+/* timeline */
+.tl { list-style: none; margin: 0; padding: 0; }
+.tl li { display: grid; grid-template-columns: 58px 20px minmax(0, 1fr); gap: 0 10px; }
+.tl .wk { font-family: var(--mono); font-size: 11.5px; color: var(--muted); text-align: right; padding-top: 2px; }
+.tl .rail { position: relative; }
+.tl .rail::before { content: ""; position: absolute; left: 9px; top: 0; bottom: 0; width: 2px; background: var(--blue-line); }
+.tl li:first-child .rail::before { top: 8px; }
+.tl li:last-child .rail::before { bottom: auto; height: 8px; }
+.tl .rail::after { content: ""; position: absolute; left: 3px; top: 3px; width: 14px; height: 14px; border-radius: 50%; background: var(--paper); border: 2px solid var(--blue-line); box-sizing: border-box; }
+.tl li.past .rail::after { background: var(--blue); border-color: var(--blue); }
+.tl li.now .rail::after { background: var(--paper); border: 4px solid var(--blue); }
+.tl li.now .wk { color: var(--blue); font-weight: 500; }
+.tl .body { padding-bottom: 18px; }
+.tl h3 { font-size: 19px; margin-bottom: 2px; }
+.tl p { font-size: 13.5px; color: var(--muted); }
+.tl li.now p { color: var(--ink); }
+.here { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; background: var(--blue); color: var(--on-blue); border-radius: 4px; padding: 1px 6px; vertical-align: 3px; margin-left: 4px; }
+.box { border: 1px solid var(--blue-line); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+.box.tint { background: var(--blue-tint); border-color: transparent; }
+ul.tips { margin: 0; padding-left: 18px; font-size: 13.5px; color: var(--muted); display: flex; flex-direction: column; gap: 5px; }
+
+/* photos */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.shot { border-radius: 12px; overflow: hidden; background: var(--blue-tint); border: 1px dashed var(--blue-line); aspect-ratio: 3 / 4; max-width: 100%; position: relative; display: grid; place-items: center; text-align: center; color: var(--muted); font-size: 12.5px; padding: 10px; }
+.shot.has { border-style: solid; }
+.shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.shot .cap { position: absolute; left: 8px; top: 8px; background: var(--blue); color: var(--on-blue); border-radius: 4px; padding: 2px 7px; font-family: var(--mono); font-size: 11px; }
+.strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.strip .shot { width: 72px; flex: none; }
+.primary { background: var(--blue); color: var(--on-blue); border: none; border-radius: 12px; padding: 13px 16px; font-weight: 600; font-size: 15px; text-align: center; display: inline-flex; justify-content: center; align-items: center; gap: 8px; text-decoration: none; }
+.primary.full { width: 100%; }
+.secondary { background: var(--blue-tint); color: var(--ink); border: none; border-radius: 12px; padding: 13px 16px; font-weight: 600; font-size: 14px; }
+.file-label { display: block; position: relative; }
+.file-label input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.file-label:focus-within .primary { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+/* check-in */
+.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.choices button { border: 1px solid var(--blue-line); background: var(--paper); border-radius: 12px; padding: 12px; text-align: left; font-size: 14.5px; font-weight: 600; }
+.choices button small { display: block; color: var(--muted); font-weight: 400; font-size: 12px; margin-top: 2px; }
+.choices button[aria-pressed="true"] { border: 2px solid var(--blue); padding: 11px; background: var(--blue-tint); }
+.summary { margin: 0; font-size: 13px; display: flex; flex-direction: column; }
+.summary div { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px dashed var(--blue-line); }
+.summary div:last-child { border-bottom: none; }
+.summary dt { color: var(--muted); }
+.summary dd { margin: 0; font-weight: 600; text-align: right; }
+.history { display: flex; flex-direction: column; font-size: 13px; }
+.history div { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--blue-line); }
+.pill { font-family: var(--mono); font-size: 11px; border-radius: 4px; padding: 1px 7px; }
+.pill.better { background: var(--good-tint); color: var(--good); }
+.pill.same { background: var(--warn-tint); color: var(--warn); }
+.pill.worse { background: var(--bad-tint); color: var(--bad); }
+.pill.unsure { background: var(--blue-tint); color: var(--muted); }
+.row { display: flex; gap: 8px; flex-wrap: wrap; }
+.row > * { flex: 1 1 140px; }
+
+/* setup */
+.pick { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.pick label { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; border: 1px solid var(--blue-line); border-radius: 14px; padding: 12px 8px 10px; cursor: pointer; position: relative; background: var(--paper); }
+.pick label svg { width: 44px; height: 60px; }
+.pick input { position: absolute; top: 10px; right: 10px; width: 18px; height: 18px; accent-color: var(--blue); }
+.pick label:has(input:checked) { border: 2px solid var(--blue); padding: 11px 7px 9px; background: var(--blue-tint); }
+.pick .pn { font-weight: 600; font-size: 13px; line-height: 1.25; }
+.pick .pm { font-family: var(--mono); font-size: 10.5px; color: var(--muted); }
+.field { display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; font-weight: 600; }
+.field input { font: inherit; font-weight: 400; padding: 10px 12px; border: 1px solid var(--blue-line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+
+/* ---------- Case column ---------- */
+.case { display: flex; flex-direction: column; gap: 36px; min-width: 0; max-width: 640px; }
+.case h2 { font-size: clamp(32px, 4vw, 46px); line-height: 1.05; letter-spacing: -0.01em; font-weight: 500; }
+.case h3 { font-size: 25px; margin-bottom: 12px; }
+.case .lede { font-size: 16.5px; color: var(--muted); margin-top: 12px; max-width: 60ch; }
+.statement { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 23px; line-height: 1.35; border-left: 3px solid var(--blue); padding-left: 18px; }
+.people { border-top: 1px solid var(--blue-line); }
+.person { display: grid; grid-template-columns: 44px 128px minmax(0, 1fr); gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--blue-line); font-size: 14px; align-items: start; }
+.person svg { width: 40px; height: 54px; }
+.person .who { font-weight: 700; }
+.person .who small { display: block; color: var(--muted); font-weight: 400; font-size: 12px; font-family: var(--mono); margin-top: 2px; }
+.person .fix { display: block; margin-top: 6px; font-family: var(--mono); font-size: 11.5px; color: var(--blue); }
+@media (max-width: 520px) { .person { grid-template-columns: 40px minmax(0, 1fr); } .person > div:last-child { grid-column: 2; } }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+.fact { background: var(--paper); border: 1px solid var(--blue-line); border-radius: 14px; padding: 14px; font-size: 13.5px; color: var(--muted); }
+.fact b { display: block; font-family: var(--display); font-weight: 600; font-size: 34px; color: var(--blue); line-height: 1.1; margin-bottom: 6px; }
+.fact b.small { font-size: 22px; color: var(--ink); }
+.sources { font-size: 12.5px; display: flex; flex-direction: column; gap: 5px; }
+.sources a { color: var(--muted); text-underline-offset: 2px; }
+.foot { font-size: 12.5px; color: var(--muted); }
+@media (prefers-reduced-motion: no-preference) { .step, .choices button, .pick label { transition: background .15s, border-color .15s; } }
+</style>
+
+<header class="hero">
+  <div class="hero-in gut">
+    <div class="hero-copy">
+      <p class="eyebrow">Mosaic Fellowship · Builder Round · Bodywise</p>
+      <h1>Be Steady<sup>WK 1–24</sup></h1>
+      <p class="lede">Most Bodywise customers don't quit because the product failed. They quit because they <b>couldn't tell it was working.</b> Be Steady stays with them after checkout.</p>
+      <div class="label-row" aria-label="What Be Steady does"><span>TO</span><span>Set expectations</span><span>Show progress</span><span>Catch the quitters</span></div>
+    </div>
+    <div class="shelf" id="shelf" aria-hidden="true"></div>
+  </div>
+</header>
+
+<div class="main gut">
+  <section class="app" aria-label="Be Steady app">
+    <div class="app-head">
+      <div class="name">Be Steady<small>Your Bodywise routine</small></div>
+      <button class="chip-btn" id="setupBtn" type="button">Change products</button>
+    </div>
+    <div class="demo" id="demoBar" hidden>
+      <span>This is an <b>example</b>: serum at week 6, gummies at week 13.</span>
+      <button class="link" id="startOwn" type="button">Start your own</button>
+    </div>
+    <nav class="tabs" role="tablist" id="tabs">
+      <button role="tab" id="tab-today" aria-selected="true" data-tab="today" type="button">Today</button>
+      <button role="tab" id="tab-timeline" aria-selected="false" data-tab="timeline" type="button">Timeline</button>
+      <button role="tab" id="tab-photos" aria-selected="false" data-tab="photos" type="button">Photos</button>
+      <button role="tab" id="tab-checkin" aria-selected="false" data-tab="checkin" type="button">Check-in</button>
+    </nav>
+    <div class="panel" id="panel" role="tabpanel"></div>
+  </section>
+
+  <section class="case" aria-label="Why Be Steady exists">
+    <div>
+      <p class="eyebrow">The research</p>
+      <h2 style="margin-top:10px">Five customers. The two who keep buying could see a result. The other three couldn't, and nobody checked in.</h2>
+      <p class="lede">Shabia stopped at six weeks. Junaid left two products half used on his shelf. Zaara finished a full 90 days, saw nothing, and now won't recommend the brand. Each of them reached a point where they needed someone to say what was normal, and nobody did.</p>
+    </div>
+
+    <div>
+      <h3>Problem statement</h3>
+      <p class="statement">Bodywise customers have no way to tell whether a product is working. Without clear expectations, a complete routine or visible progress, they drift away mid-course or finish disappointed, and Bodywise keeps only the customers who happen to see results on their own.</p>
+    </div>
+
+    <div>
+      <h3>What I heard, and what Be Steady does about it</h3>
+      <div class="people" id="people"></div>
+    </div>
+
+    <div>
+      <h3>Why weekly check-ins, not daily reminders</h3>
+      <div class="facts">
+        <div class="fact"><b class="num">95%</b>of hair-treatment users who saw no results stopped, against 69% of those who improved (2023 study, 400 people).</div>
+        <div class="fact"><b class="num">74% vs 32%</b>adherence when patients rated their own progress each week. Daily text reminders made no difference.</div>
+        <div class="fact"><b class="small">The gap</b>Bodywise's app has habit trackers and free doctor consults. It has no week-by-week results timeline and no progress photos.</div>
+      </div>
+    </div>
+
+    <div>
+      <h3>How Bodywise would know it works</h3>
+      <div class="facts">
+        <div class="fact"><b class="small">Course completion</b>Share of customers still on a product at week 8, the point where people drift.</div>
+        <div class="fact"><b class="small">90-day repeat rate</b>Be Steady users against a matched group who don't use it.</div>
+        <div class="fact"><b class="small">Saves</b>"No change" check-ins that end in a consult instead of a lost customer.</div>
+      </div>
+    </div>
+
+    <div class="sources" id="sources"><p class="eyebrow" style="margin-bottom:4px">Where the timelines come from</p></div>
+    <p class="foot">A concept by Zaara for the Mosaic Fellowship Builder Round. Not an official Bodywise product. Timelines are general guidance, not medical advice. Anything you enter stays in this browser.</p>
+  </section>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // Timelines combine what Bodywise's own product pages say with dermatology evidence (see sources).
+  var PRODUCTS = {
+    "hair-serum": {
+      name: "Advanced Hair Growth Serum Roll On", short: "Hair serum", area: "Hair · scalp",
+      course: 24, firstChange: 8, doctorWeek: 14, packDays: null,
+      steps: [
+        { id: "apply", title: "Roll the serum onto your scalp", how: "At night, on the scalp only, not the lengths. Massage for 2 minutes and leave it on. Don't apply right before a hair wash.", daily: true }
+      ],
+      timeline: [
+        { from: 1, to: 4, title: "Nothing visible yet", text: "Bodywise itself says you won't see results in the first month. The actives work on the hair growth cycle, which is slow." },
+        { from: 5, to: 8, title: "Hair fall may start to ease", text: "Bodywise lists less hair fall in month 2. Count the hair on your comb or pillow once a week rather than judging in the mirror." },
+        { from: 9, to: 12, title: "Less fall, first baby hairs", text: "Month 3 is when Bodywise says baby hairs appear along the parting and hairline. Studies of these actives first measured a change at week 12." },
+        { from: 13, to: 16, title: "More volume", text: "Bodywise lists increased volume in month 4. Your week 1 and latest photos should start to look different." },
+        { from: 17, to: null, title: "Density builds, keep going", text: "Visible density is a 4 to 6 month result. Stopping usually brings the hair fall back, so this is a routine to keep." }
+      ],
+      tips: ["Once a day is what Bodywise calls compulsory for results. Night works best so it stays on for hours.", "Part your hair in a few lines and roll along each one so the serum reaches skin, not hair.", "Count fallen hairs on the same pillow or comb weekly. It's the earliest sign you'll get."],
+      doctor: "There's no drop in hair fall after 3 to 4 months of daily use, or at any point you notice patches, a widening part, an itchy or flaky scalp, or sudden heavy shedding.",
+      worse: "Itching, redness or burning on the scalp needs a doctor's look before you continue.",
+      question: "Compared with week 1, how is your hair fall?",
+      photoTip: "Photograph your parting from above, with hair combed the same way each time.",
+      travel: "Roll-ons can leak in transit. Twist the cap shut until it stops, seal it in a zip pouch, and pack it upright in your toiletry bag."
+    },
+    "gummies": {
+      name: "Biotin Hair Gummies", short: "Hair gummies", area: "Hair · supplement",
+      course: 16, firstChange: 12, doctorWeek: 12, packDays: 30,
+      steps: [
+        { id: "eat", title: "Have one gummy after a meal", how: "One a day, any meal. Chew it, no water needed.", daily: true }
+      ],
+      timeline: [
+        { from: 1, to: 4, title: "Nothing visible yet", text: "Bodywise says you won't see results in the first month. Supplements work on hair that hasn't grown out yet." },
+        { from: 5, to: 8, title: "Still building", text: "Most people notice nothing in the mirror yet. This is where many stop. Keep a weekly photo so you have something to compare later." },
+        { from: 9, to: 12, title: "Hair feels stronger", text: "Bodywise lists a visible gain in hair strength by month 3. If hair fall hasn't eased at all by now, it's time to find out why." },
+        { from: 13, to: null, title: "Better texture, or a different plan", text: "Month 4 is when Bodywise expects better texture. If nothing has changed, the cause may be something gummies can't fix, like low iron, thyroid or PCOS." }
+      ],
+      tips: ["Take it at the same meal every day so it becomes automatic.", "Pause gummies 2 days before any blood test and tell the lab. Biotin can throw off thyroid and heart test results.", "Gummies help most when a low nutrient is part of the cause. If 3 months pass with no change, a doctor can test for what is."],
+      doctor: "Hair fall hasn't eased after 3 months, your part is widening, or you also have irregular periods, acne, facial hair or constant tiredness. Thyroid, iron and PCOS all cause hair fall and can be tested.",
+      worse: "Hair fall that's getting heavier while on a supplement usually has another cause worth checking.",
+      question: "Compared with week 1, how is your hair fall?",
+      photoTip: "Photograph your parting from above, with hair combed the same way each time.",
+      travel: null
+    },
+    "lactic-lotion": {
+      name: "5% Lactic Acid Body Lotion", short: "Lactic acid lotion", area: "Body · rough skin, bumps",
+      course: 16, firstChange: 4, doctorWeek: 6, packDays: null,
+      steps: [
+        { id: "apply", title: "Massage the lotion in after your bath", how: "A generous amount on damp skin, within 5 minutes of drying off.", daily: true },
+        { id: "spf", title: "Sunscreen on exposed skin", how: "Every morning. Acids make skin more sun-sensitive, and Bodywise asks you to follow up with sunscreen.", daily: true, pair: true }
+      ],
+      timeline: [
+        { from: 1, to: 2, title: "Feels smoother first", text: "Skin often feels softer to the touch before it looks different. Mild tingling is normal." },
+        { from: 3, to: 4, title: "Bumps start to flatten", text: "In a clinical trial of a stronger 10% lactic acid cream, bumps fell about 40% by week 4. A 5% lotion may be a little slower." },
+        { from: 5, to: 8, title: "Visibly smoother", text: "The same trial saw about half the bumps gone by week 8. Compare your photos now." },
+        { from: 9, to: 16, title: "The difference Bodywise promises", text: "Bodywise says 3 to 4 months of regular use for a noticeable difference. Bumps come back if you stop, so plan to keep a lighter routine going." }
+      ],
+      tips: ["Apply on damp skin straight after your bath. Dermatologists say within 5 minutes.", "Patch test on your inner arm for a day before using it all over.", "Keep sunscreen going for a week after you stop. Sun sensitivity lasts that long."],
+      doctor: "There's no improvement after 4 to 6 weeks of daily use, which is the point dermatologists suggest checking in.",
+      worse: "Burning, a rash or spreading redness means stop and get it looked at.",
+      question: "Compared with week 1, how do the bumps and rough patches look?",
+      photoTip: "Photograph the same patch of skin from the same distance, in daylight.",
+      travel: null
+    },
+    "aha-scrub": {
+      name: "10% AHA Body Scrub", short: "AHA scrub", area: "Body · exfoliation",
+      course: 12, firstChange: 4, doctorWeek: 8, packDays: null,
+      steps: [
+        { id: "scrub", title: "Scrub in the shower", how: "On wet skin, gentle circles, then rinse. Bodywise's dermatologist suggests 1 to 2 times a week.", days: [0, 3] },
+        { id: "moist", title: "Moisturise after every shower", how: "Within 5 minutes of drying off. Exfoliated skin dries out fast without it, and results stay small.", daily: true, pair: true }
+      ],
+      timeline: [
+        { from: 1, to: 2, title: "Softer straight away", text: "Skin feels smoother after the first few scrubs. The look changes more slowly." },
+        { from: 3, to: 4, title: "Rough patches ease", text: "With moisturiser alongside, bumps and dullness usually start to improve within a month." },
+        { from: 5, to: 8, title: "Visible change", text: "Compare photos. If skin looks dry or ashy, the moisturiser step is the first thing to check." },
+        { from: 9, to: null, title: "Keep it light and regular", text: "Once or twice a week is enough to maintain results. Scrubbing harder or more often doesn't speed things up." }
+      ],
+      tips: ["Gentle pressure only. Irritation can itself cause dark marks.", "Don't scrub the same day as other acid products on the same area.", "Moisturiser is part of the routine, not optional. It's what keeps the smoothness."],
+      doctor: "Stinging that lasts, a rash, or new dark marks where you scrub.",
+      worse: "Raw, stinging or darkened skin means stop scrubbing and let a doctor look.",
+      question: "Compared with week 1, how does the skin feel and look?",
+      photoTip: "Photograph the same patch of skin from the same distance, in daylight.",
+      travel: null
+    },
+    "glycolic-stick": {
+      name: "7% Glycolic Acid Body Stick", short: "Glycolic stick", area: "Body · elbows, knees, heels",
+      course: 12, firstChange: 4, doctorWeek: 8, packDays: null,
+      steps: [
+        { id: "apply", title: "Glide the stick on clean skin", how: "Elbows, knees, heels or legs. Start with 2 to 3 nights a week and go daily only if skin is fine with it.", days: [1, 3, 5] },
+        { id: "moist", title: "Moisturise on top at night", how: "Bodywise pairs the stick with a moisturiser at night.", days: [1, 3, 5], pair: true },
+        { id: "spf", title: "SPF 30+ the next morning", how: "On any area you used the stick. Glycolic acid makes skin more sun-sensitive.", days: [2, 4, 6], pair: true }
+      ],
+      timeline: [
+        { from: 1, to: 2, title: "Getting used to it", text: "Some tingling is normal. If the texture feels waxy, a thin layer is enough. Rub it in with your fingers." },
+        { from: 3, to: 4, title: "Smoother rough spots", text: "Dry, rough patches on elbows and knees usually soften first." },
+        { from: 5, to: 8, title: "Visible change", text: "Compare photos. Bodywise doesn't state a timeline for this product, so these weeks come from studies of similar acids." },
+        { from: 9, to: null, title: "Maintain", text: "Keep 2 to 3 nights a week going to hold the result." }
+      ],
+      tips: ["A thin layer is enough. More product means more residue, not faster results.", "Not for the face.", "Wait a day after shaving or waxing before using it on that area."],
+      doctor: "No change after about 8 weeks, or stinging, rash or darkening where you apply it.",
+      worse: "Burning, a rash or darker patches mean stop and get it checked.",
+      question: "Compared with week 1, how do the rough or dark areas look?",
+      photoTip: "Photograph the same elbow or knee from the same distance, in daylight.",
+      travel: null
+    },
+    "underarm": {
+      name: "6% AHA BHA Underarm Roll On", short: "Underarm roll-on", area: "Body · underarms (with kojic acid)",
+      course: 16, firstChange: 8, doctorWeek: 12, packDays: null,
+      steps: [
+        { id: "apply", title: "Roll on clean, dry underarms", how: "Let it dry fully before you dress. Wait 10 to 15 minutes after shaving, 6 to 12 hours after waxing.", daily: true }
+      ],
+      timeline: [
+        { from: 1, to: 4, title: "Nothing visible yet", text: "Pigment fades slowly. Odour control usually shows up before any change in colour." },
+        { from: 5, to: 8, title: "Slight lightening, maybe", text: "Studies of kojic acid show only small changes this early. Keep the routine daily." },
+        { from: 9, to: 12, title: "The change Bodywise promises", text: "Bodywise says you should notice a change within 3 months. Week 12 is the fair point to judge." },
+        { from: 13, to: null, title: "Keep fading", text: "Dermatologists say dark patches can take 6 to 12 months to fade fully. Keep the routine daily." }
+      ],
+      tips: ["Shaving and friction re-darken underarms. Fewer razor passes help the product work.", "Stop if it stings for more than a moment. Irritation can make dark patches darker.", "Patch test for a day before the first full use."],
+      doctor: "No change after 12 weeks of daily use, or skin that's velvety, thick, itchy or spreading. That can point to something like insulin resistance that needs a doctor.",
+      worse: "Stinging, rash or darker skin means stop and get it checked.",
+      question: "Compared with week 1, how do your underarms look?",
+      photoTip: "Same arm position, same distance, daylight from a window.",
+      travel: "Roll-ons can leak in transit. Twist the cap shut, seal it in a zip pouch, and keep it upright in your cabin bag."
+    }
+  };
+  var SOURCES = [
+    { title: "Bodywise: Advanced Hair Growth Serum Roll On", url: "https://bebodywise.com/product/hair-growth-serum-roll-on-xp5" },
+    { title: "Bodywise: Hair Growth Pack (month-by-month results)", url: "https://bebodywise.com/product/hair-growth-pack-rosemary-roll-on" },
+    { title: "Bodywise: Biotin Hair Gummies", url: "https://bebodywise.com/product/hair-health-gummies" },
+    { title: "Bodywise: 5% Lactic Acid Body Lotion", url: "https://bebodywise.com/product/5-lactic-acid-body-lotion" },
+    { title: "Bodywise: body routine for strawberry legs (scrub frequency)", url: "https://bebodywise.com/blog/body-skincare-routine-women-strawberry-legs/" },
+    { title: "Bodywise: 7% Glycolic Acid Body Stick", url: "https://bebodywise.com/product/glycolic-acid-stick" },
+    { title: "Bodywise: 6% AHA BHA Underarm Roll On", url: "https://bebodywise.com/product/6-aha-bha-underarm-roll-on" },
+    { title: "Review of non-minoxidil hair actives (Redensyl, Anagain)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12251978" },
+    { title: "JCAD: Biotin for hair loss, and lab test interference", url: "https://jcadonline.com/biotin-for-hair-loss-evidence/" },
+    { title: "AAD: Hair loss in women, 18 causes", url: "https://www.aad.org/public/diseases/hair-loss/causes/18-causes" },
+    { title: "Lactic acid for keratosis pilaris, 12-week trial", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC4354723" },
+    { title: "AAD: Keratosis pilaris treatment", url: "https://www.aad.org/public/diseases/a-z/keratosis-pilaris-treatment" },
+    { title: "FDA: Alpha hydroxy acids and sun sensitivity", url: "https://www.fda.gov/cosmetics/cosmetic-ingredients/alpha-hydroxy-acids" },
+    { title: "AAD: How to fade dark spots", url: "https://www.aad.org/public/everyday-care/skin-care-secrets/routine/fade-dark-spots" },
+    { title: "Why people stop hair treatment early (Dermatology and Therapy, 2023)", url: "https://link.springer.com/article/10.1007/s13555-023-00919-x" },
+    { title: "Weekly check-ins vs reminders for adherence (review, 2014)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC3933343" }
+  ];
+
+  // Packaging-label benefits and pack shape for each product, plus one product added after the interviews.
+  var EXTRA = {
+    "hair-serum": { shape: "rollon", label: "Hair serum", purpose: ["Reduce hair fall", "Hair growth"] },
+    "gummies": { shape: "jar", label: "Gummies", purpose: ["Hair strength", "Daily biotin"] },
+    "lactic-lotion": { shape: "pump", label: "Lactic 5%", purpose: ["Smooth bumps", "Soften skin"] },
+    "aha-scrub": { shape: "tub", label: "AHA scrub", purpose: ["Exfoliate", "Smoother skin"] },
+    "glycolic-stick": { shape: "stick", label: "Glycolic", purpose: ["Rough patches", "Even texture"] },
+    "underarm": { shape: "rollon", label: "Underarm", purpose: ["Control odour", "Reduce pigmentation"] },
+    "pig-cream": { shape: "tube", label: "Repair", purpose: ["Reduce pigmentation", "Even skin tone"] }
+  };
+  PRODUCTS["underarm"].name = "AHA BHA Underarm Roll-on";
+  PRODUCTS["underarm"].area = "Body · underarms";
+  PRODUCTS["pig-cream"] = {
+    name: "Pigmentation Repair Cream", short: "Repair cream", area: "Body · dark patches",
+    course: 16, firstChange: 8, doctorWeek: 12, packDays: null,
+    steps: [
+      { id: "apply", title: "Pea-sized amount on clean, dry skin", how: "Once a day. If you use the underarm roll-on in the morning, Bodywise's kit puts this cream at night.", daily: true },
+      { id: "spf", title: "Sunscreen on exposed patches", how: "In the morning, on any sun-exposed area you treat. It contains lactic acid and retinol, which make skin more sun-sensitive.", daily: true, pair: true }
+    ],
+    timeline: [
+      { from: 1, to: 4, title: "Nothing visible yet", text: "Pigment sits deep and fades slowly. Use it daily and leave it on." },
+      { from: 5, to: 8, title: "Slight evening out", text: "Some people notice softer, more even skin first. Colour change is still small." },
+      { from: 9, to: 12, title: "The change Bodywise promises", text: "Bodywise's FAQ says to expect a visible reduction in pigmentation within 3 months." },
+      { from: 13, to: null, title: "Keep fading", text: "Dermatologists say dark patches can take 6 to 12 months to fade fully, longer for deeper ones." }
+    ],
+    tips: ["Body only, not the face.", "If your skin is sensitive, start every other day and build up.", "Patch test on your inner arm for a day first."],
+    doctor: "No change after 12 weeks of daily use, or patches that feel velvety or thick, itch, or keep spreading.",
+    worse: "Stinging, peeling or darker patches mean stop and get it checked.",
+    question: "Compared with week 1, how do the dark patches look?",
+    photoTip: "Same area, same distance, daylight from a window.",
+    travel: null
+  };
+  SOURCES.splice(7, 0, { title: "Bodywise: Pigmentation Repair Cream", url: "https://bebodywise.com/product/pigmentation-repair-cream" });
+  Object.keys(EXTRA).forEach(function (id) { if (PRODUCTS[id]) { PRODUCTS[id].shape = EXTRA[id].shape; PRODUCTS[id].label = EXTRA[id].label; PRODUCTS[id].purpose = EXTRA[id].purpose; } });
+  var ORDER = ["hair-serum", "gummies", "lactic-lotion", "aha-scrub", "glycolic-stick", "underarm", "pig-cream"];
+
+  // ---------- Pack illustrations (drawn, not photographed) ----------
+  function pack(id, w) {
+    var p = PRODUCTS[id], s = p.shape, L = esc(p.label), h, body;
+    var band = function (x, y, bw, bh) {
+      return '<rect class="b" x="' + x + '" y="' + y + '" width="' + bw + '" height="' + bh + '"/>' +
+        '<text x="' + (x + bw / 2) + '" y="' + (y + bh / 2 + 3.2) + '" text-anchor="middle" class="t"' + (p.label.length * 3.4 > bw - 6 ? ' textLength="' + (bw - 6) + '" lengthAdjust="spacingAndGlyphs"' : '') + '>' + L + '</text>' +
+        '<line class="r" x1="' + (x + 4) + '" x2="' + (x + bw - 4) + '" y1="' + (y + bh - 5) + '" y2="' + (y + bh - 5) + '"/>';
+    };
+    if (s === "rollon") {
+      h = 120; body = '<ellipse class="w" cx="30" cy="20" rx="17" ry="16"/><rect class="w" x="12" y="30" width="36" height="86" rx="9"/><rect class="s" x="12" y="30" width="7" height="86" rx="3.5"/><path class="s" d="M14 36 h32" stroke-width="1" />' + band(12, 70, 36, 26);
+    } else if (s === "tube") {
+      h = 120; body = '<path class="w" d="M8 6 h44 l-4 88 q0 6 -6 6 h-24 q-6 0 -6 -6 z"/><rect class="w" x="18" y="100" width="24" height="16" rx="3"/><rect class="s" x="8" y="6" width="44" height="5"/>' + band(10, 56, 40, 24);
+    } else if (s === "jar") {
+      h = 120; body = '<rect class="w" x="10" y="12" width="40" height="22" rx="4"/><rect class="s" x="10" y="12" width="40" height="5" rx="2"/><rect class="w" x="7" y="32" width="46" height="84" rx="10"/><rect class="s" x="7" y="32" width="8" height="84" rx="4"/>' + band(7, 62, 46, 30) + '<circle class="d" cx="22" cy="104" r="4"/><circle class="d" cx="30" cy="106" r="4"/><circle class="d" cx="38" cy="104" r="4"/>';
+    } else if (s === "pump") {
+      h = 120; body = '<rect class="w" x="26" y="4" width="22" height="7" rx="3"/><rect class="w" x="24" y="10" width="12" height="14" rx="2"/><rect class="w" x="20" y="22" width="20" height="10" rx="3"/><rect class="w" x="10" y="30" width="40" height="86" rx="10"/><rect class="s" x="10" y="30" width="8" height="86" rx="4"/>' + band(10, 66, 40, 28);
+    } else if (s === "tub") {
+      h = 120; body = '<rect class="w" x="4" y="52" width="52" height="16" rx="4"/><rect class="s" x="4" y="52" width="52" height="4" rx="2"/><rect class="w" x="6" y="66" width="48" height="50" rx="8"/><rect class="s" x="6" y="66" width="8" height="50" rx="4"/>' + band(6, 78, 48, 26);
+    } else {
+      h = 120; body = '<rect class="w" x="14" y="8" width="32" height="30" rx="12"/><rect class="s" x="14" y="8" width="32" height="6" rx="3"/><rect class="w" x="12" y="36" width="36" height="80" rx="8"/><rect class="s" x="12" y="36" width="7" height="80" rx="3.5"/><rect class="w" x="27" y="110" width="6" height="6" rx="1"/>' + band(12, 64, 36, 26);
+    }
+    return '<svg viewBox="0 0 60 ' + h + '" width="' + w + '" role="img" aria-label="' + esc(p.name) + ' pack" class="pk">' + body + '</svg>';
+  }
+
+  // ---------- Storage ----------
+  var KEY = "steady-v1";
+  function load() { try { var s = localStorage.getItem(KEY); return s ? JSON.parse(s) : null; } catch (e) { return null; } }
+  function save() { if (state.demo) return; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { flash("Couldn't save in this browser. Try removing an older photo."); } }
+
+  function iso(d) { var z = new Date(d.getTime() - d.getTimezoneOffset() * 60000); return z.toISOString().slice(0, 10); }
+  function addDays(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; }
+  function parse(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  var TODAY = new Date(); TODAY.setHours(0, 0, 0, 0);
+
+  // Example data: a serum user in week 6 (where people drift) and a gummies user in week 13 (where Zaara was).
+  function demoState() {
+    var s1 = addDays(TODAY, -38), s2 = addDays(TODAY, -86), checks = {};
+    for (var i = 1; i <= 28; i++) {
+      var day = iso(addDays(TODAY, -i)); checks[day] = {};
+      if (i % 5 !== 3) checks[day]["hair-serum:apply"] = true;
+      if (i % 4 !== 1) checks[day]["gummies:eat"] = true;
+    }
+    return {
+      demo: true,
+      items: [{ id: "hair-serum", start: iso(s1) }, { id: "gummies", start: iso(s2) }],
+      checks: checks, photos: [],
+      checkins: [
+        { date: iso(addDays(s1, 14)), product: "hair-serum", week: 3, result: "same" },
+        { date: iso(addDays(s1, 28)), product: "hair-serum", week: 5, result: "unsure" },
+        { date: iso(addDays(s2, 28)), product: "gummies", week: 5, result: "same" },
+        { date: iso(addDays(s2, 56)), product: "gummies", week: 9, result: "same" },
+        { date: iso(addDays(s2, 77)), product: "gummies", week: 12, result: "same" }
+      ],
+      focus: "hair-serum"
+    };
+  }
+
+  var state = load() || demoState();
+  state.items = state.items.filter(function (i) { return PRODUCTS[i.id]; });
+  var tab = "today", setupOpen = false;
+
+  function el(html) { var t = document.createElement("template"); t.innerHTML = html.trim(); return t.content; }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function weekOf(item) { var days = Math.max(0, Math.floor((TODAY - parse(item.start)) / 86400000)); return { days: days, week: Math.floor(days / 7) + 1 }; }
+  function current(item) { var p = PRODUCTS[item.id], w = weekOf(item).week, cur = p.timeline[0]; p.timeline.forEach(function (ph) { if (w >= ph.from) cur = ph; }); return cur; }
+  function focusItem() { return state.items.filter(function (i) { return i.id === state.focus; })[0] || state.items[0]; }
+  function adherence(item, days) {
+    var p = PRODUCTS[item.id], hit = 0, total = 0, daily = p.steps.filter(function (s) { return s.daily && !s.pair; });
+    if (!daily.length) return null;
+    var span = Math.min(days, weekOf(item).days);
+    for (var i = 1; i <= span; i++) { var d = iso(addDays(TODAY, -i)); daily.forEach(function (s) { total++; if (state.checks[d] && state.checks[d][item.id + ":" + s.id]) hit++; }); }
+    return total ? Math.round(hit / total * 100) : null;
+  }
+  var RES = { better: "Better", same: "No change", worse: "Worse", unsure: "Not sure" };
+
+  var panel = document.getElementById("panel");
+  function render() {
+    document.getElementById("demoBar").hidden = !state.demo;
+    document.querySelectorAll("#tabs button").forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.tab === tab && !setupOpen)); });
+    panel.innerHTML = "";
+    if (setupOpen || !state.items.length) return renderSetup();
+    ({ today: renderToday, timeline: renderTimeline, photos: renderPhotos, checkin: renderCheckin })[tab]();
+  }
+  function switcher() {
+    if (state.items.length < 2) return "";
+    return '<div class="seg" role="group" aria-label="Product">' + state.items.map(function (i) { return '<button type="button" data-focus="' + i.id + '" aria-pressed="' + (i.id === focusItem().id) + '">' + esc(PRODUCTS[i.id].short) + '</button>'; }).join("") + '</div>';
+  }
+  function bindSwitcher() { panel.querySelectorAll("[data-focus]").forEach(function (b) { b.onclick = function () { state.focus = b.dataset.focus; save(); render(); }; }); }
+  function tags(p) { return '<div class="tags"><span>TO</span><span>' + esc(p.purpose[0]) + '</span><span>' + esc(p.purpose[1]) + '</span></div>'; }
+
+  // ---------- Today ----------
+  function renderToday() {
+    var dayKey = iso(TODAY), html = "", names = ["S", "M", "T", "W", "T", "F", "S"], dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    state.items.forEach(function (item) {
+      var p = PRODUCTS[item.id], w = weekOf(item), ph = current(item);
+      html += '<article class="pcard"><div class="pcard-top">' + pack(item.id, 64) +
+        '<div><p class="eyebrow">' + esc(p.area) + '</p><h2>' + esc(p.name) + '</h2></div>' +
+        '<div class="badge num" aria-label="Week ' + w.week + ' of ' + p.course + '"><div><b>' + w.week + '</b><span>OF ' + p.course + ' WK</span></div></div></div>' + tags(p) +
+        '<div class="pcard-body"><div><div class="weeks" style="grid-template-columns:repeat(' + p.course + ',1fr)" aria-hidden="true">';
+      for (var k = 1; k <= p.course; k++) html += '<i class="' + (k < w.week ? "done" : k === w.week ? "now" : "") + (k === p.firstChange ? " first" : "") + '"></i>';
+      html += '</div><div class="weeks-legend num"><span>Day ' + (w.days + 1) + '</span><span class="g">First changes ~ week ' + p.firstChange + '</span></div></div>' +
+        '<div class="expect"><strong>' + esc(ph.title) + '</strong><p>' + esc(ph.text) + '</p></div>';
+      if (w.week < p.firstChange) {
+        var left = p.firstChange - w.week;
+        html += '<div class="note info"><b>' + left + ' more week' + (left === 1 ? "" : "s") + ' before most people notice anything.</b>No change yet is expected. Stopping now means starting again from week 1.</div>';
+      }
+      html += '<div class="steps">';
+      var shown = 0;
+      p.steps.forEach(function (s) {
+        var key = item.id + ":" + s.id, on = state.checks[dayKey] && state.checks[dayKey][key];
+        if (!(s.daily || (s.days && s.days.indexOf(TODAY.getDay()) > -1))) return;
+        shown++;
+        html += '<label class="step' + (on ? " done" : "") + '"><input type="checkbox" id="st-' + key.replace(":", "-") + '" data-step="' + key + '"' + (on ? " checked" : "") + '><span><span class="t">' + esc(s.title) + (s.pair ? '<span class="pair">Don\'t skip</span>' : "") + '</span><span class="d">' + esc(s.how) + '</span></span></label>';
+      });
+      if (!shown) {
+        var next = null;
+        for (var n = 1; n <= 7 && next === null; n++) { var dn = addDays(TODAY, n).getDay(); if (p.steps.some(function (s) { return s.days && s.days.indexOf(dn) > -1; })) next = dayNames[dn]; }
+        html += '<div class="note info"><b>Rest day for this one.</b>Next use: ' + (next || "later this week") + '. Using acids every day doesn\'t speed things up.</div>';
+      }
+      html += '</div><div><p class="eyebrow" style="margin-bottom:8px">Last 7 days</p><div class="dots">';
+      for (var i = 6; i >= 0; i--) {
+        var d = addDays(TODAY, -i), k2 = iso(d), done = state.checks[k2] && p.steps.some(function (s) { return state.checks[k2][item.id + ":" + s.id]; });
+        html += '<span><b class="' + (done ? "on" : "") + (i === 0 ? " today" : "") + '">' + (done ? "✓" : "") + '</b>' + names[d.getDay()] + '</span>';
+      }
+      html += '</div></div>';
+      if (p.packDays) {
+        var leftDays = p.packDays - (w.days % p.packDays);
+        var lastC = state.checkins.filter(function (c) { return c.product === item.id; }).slice(-1)[0];
+        var stuck = w.week >= p.doctorWeek && lastC && (lastC.result === "same" || lastC.result === "worse");
+        if (leftDays <= 7 && stuck) html += '<div class="note warn"><b>Before you reorder, talk to a doctor.</b>Your pack runs out in about ' + leftDays + ' days and you reported no change at week ' + lastC.week + '. A free Bodywise consult can find out why before you spend more. The Check-in tab has a summary to share.</div>';
+        else if (leftDays <= 7) html += '<div class="note warn"><b>Your pack runs out in about ' + leftDays + ' day' + (leftDays === 1 ? "" : "s") + '.</b>You\'re in week ' + w.week + '. ' + (w.week <= p.firstChange + 2 ? "This is when changes usually start to show, so a gap now would set you back." : "Reorder now so there's no gap in your routine.") + '</div>';
+      }
+      if (p.travel) html += '<div class="note info"><b>Travelling?</b>' + esc(p.travel) + '</div>';
+      html += '</div></article>';
+    });
+    panel.appendChild(el(html));
+    panel.querySelectorAll("[data-step]").forEach(function (cb) {
+      cb.onchange = function () { state.checks[dayKey] = state.checks[dayKey] || {}; state.checks[dayKey][cb.dataset.step] = cb.checked; save(); render(); };
+    });
+  }
+
+  // ---------- Timeline ----------
+  function renderTimeline() {
+    var item = focusItem(), p = PRODUCTS[item.id], w = weekOf(item).week, cur = current(item);
+    var html = switcher() + '<div class="sec-title"><p class="eyebrow">What to expect · you\'re in week ' + w + '</p><h2>' + esc(p.name) + '</h2></div><ol class="tl">';
+    p.timeline.forEach(function (ph) {
+      var cls = ph === cur ? "now" : (w > (ph.to || 999) ? "past" : "");
+      html += '<li class="' + cls + '"><span class="wk num">WK ' + ph.from + (ph.to ? "–" + ph.to : "+") + '</span><span class="rail"></span><div class="body"><h3>' + esc(ph.title) + (ph === cur ? '<span class="here">You</span>' : "") + '</h3><p>' + esc(ph.text) + '</p></div></li>';
+    });
+    html += '</ol><div class="box tint"><p class="eyebrow">Get the most out of it</p><ul class="tips">' + p.tips.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + '</ul></div>' +
+      '<div class="note warn"><b>Signs worth a check-up</b>' + esc(p.doctor) + '</div>';
+    panel.appendChild(el(html)); bindSwitcher();
+  }
+
+  // ---------- Photos ----------
+  function renderPhotos() {
+    var item = focusItem(), p = PRODUCTS[item.id];
+    var mine = state.photos.filter(function (ph) { return ph.product === item.id; }).sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+    var first = mine[0], last = mine.length > 1 ? mine[mine.length - 1] : null;
+    var html = switcher() + '<div class="sec-title"><p class="eyebrow">Progress photos · ' + esc(p.short) + '</p><h2>Small changes are hard to see in the mirror. Side by side, they\'re obvious.</h2></div>' +
+      '<div class="compare">' + shot(first, "WK 1", "Your first photo") + shot(last, last ? "WK " + last.week : "LATEST", "Add one each week") + '</div>' +
+      '<label class="file-label"><input type="file" accept="image/*" id="photoIn"><span class="primary full">Add this week\'s photo</span></label>' +
+      '<div class="box tint"><p class="eyebrow">For a fair comparison</p><ul class="tips"><li>' + esc(p.photoTip) + '</li><li>Same spot, same light, same time of day.</li><li>Once a week is enough. Daily photos show noise, not progress.</li></ul></div>';
+    if (mine.length > 2) html += '<div><p class="eyebrow" style="margin-bottom:8px">All photos</p><div class="strip">' + mine.map(function (ph) { return shot(ph, "WK " + ph.week, ""); }).join("") + '</div></div>';
+    html += '<p class="foot">Photos stay in this browser. Nothing is uploaded.</p>';
+    panel.appendChild(el(html)); bindSwitcher();
+    var input = document.getElementById("photoIn");
+    input.onchange = function () { var f = input.files && input.files[0]; if (!f) return; shrink(f, function (url) { state.photos.push({ product: item.id, date: iso(TODAY), week: weekOf(item).week, url: url }); save(); render(); }); };
+  }
+  function shot(ph, cap, empty) {
+    if (!ph) return '<div class="shot">' + esc(empty) + '</div>';
+    return '<div class="shot has"><img src="' + ph.url + '" alt="Progress photo, ' + esc(cap) + '"><span class="cap num">' + esc(cap) + '</span></div>';
+  }
+  function shrink(file, cb) {
+    var r = new FileReader();
+    r.onload = function () {
+      var img = new Image();
+      img.onload = function () { var s = Math.min(1, 480 / Math.max(img.width, img.height)), c = document.createElement("canvas"); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s); c.getContext("2d").drawImage(img, 0, 0, c.width, c.height); cb(c.toDataURL("image/jpeg", 0.72)); };
+      img.onerror = function () { flash("That file couldn't be read as an image. Try a JPG or PNG."); };
+      img.src = r.result;
+    };
+    r.readAsDataURL(file);
+  }
+
+  // ---------- Check-in ----------
+  function renderCheckin() {
+    var item = focusItem(), p = PRODUCTS[item.id], w = weekOf(item).week;
+    var hist = state.checkins.filter(function (c) { return c.product === item.id; });
+    var cur = hist.filter(function (c) { return c.week === w; })[0];
+    var html = switcher() + '<div class="sec-title"><p class="eyebrow">Weekly check-in · week ' + w + '</p><h2>' + esc(p.question) + '</h2></div><div class="choices" role="group" aria-label="Your answer">' +
+      [["better", "Better", "I can see or feel a difference"], ["same", "No change", "Same as week 1"], ["worse", "Worse", "Irritation, more fall, new issues"], ["unsure", "Not sure", "Hard to tell"]].map(function (c) {
+        return '<button type="button" data-choice="' + c[0] + '" aria-pressed="' + (cur && cur.result === c[0] ? "true" : "false") + '">' + c[1] + '<small>' + c[2] + '</small></button>';
+      }).join("") + '</div><div id="verdict"></div>';
+    if (hist.length) html += '<div><p class="eyebrow" style="margin-bottom:6px">Your check-ins</p><div class="history">' + hist.slice().reverse().map(function (c) { return '<div><span class="num">Week ' + c.week + '</span><span class="pill ' + c.result + '">' + RES[c.result] + '</span></div>'; }).join("") + '</div></div>';
+    panel.appendChild(el(html)); bindSwitcher();
+    panel.querySelectorAll("[data-choice]").forEach(function (b) {
+      b.onclick = function () {
+        var ex = state.checkins.filter(function (c) { return c.product === item.id && c.week === w; })[0];
+        if (ex) ex.result = b.dataset.choice; else state.checkins.push({ date: iso(TODAY), product: item.id, week: w, result: b.dataset.choice });
+        save(); render();
+      };
+    });
+    if (cur) verdict(item, cur.result);
+  }
+  function verdict(item, r) {
+    var p = PRODUCTS[item.id], w = weekOf(item).week, html;
+    if (r === "better") html = '<div class="note good"><b>That\'s the product working.</b>Take this week\'s photo so you can see it later. Results build on each other, so keep going to week ' + p.course + '.</div>';
+    else if (r === "worse") html = '<div class="note bad"><b>Pause it and talk to a doctor.</b>' + esc(p.worse) + ' Bodywise offers a free consultation. Share the summary below so you don\'t have to explain from scratch.</div>' + summary(item);
+    else if (w < p.doctorWeek) html = '<div class="note info"><b>That\'s normal for week ' + w + '.</b>Most people first notice a change around week ' + p.firstChange + '. ' + (r === "unsure" ? "Compare your photos instead of the mirror. It's easier to judge." : "Keep going and check in again next week.") + '</div>';
+    else html = '<div class="note warn"><b>Week ' + w + ' with no clear change is worth a conversation.</b>It doesn\'t mean nothing will work for you. Signs worth a check-up: ' + esc(p.doctor) + ' Book Bodywise\'s free doctor consult and share this summary.</div>' + summary(item);
+    document.getElementById("verdict").appendChild(el(html));
+    var copy = document.getElementById("copySum");
+    if (copy) copy.onclick = function () {
+      var text = Array.prototype.map.call(document.querySelectorAll("#sumText > div"), function (d) { return d.children[0].textContent + ": " + d.children[1].textContent; }).join("\n");
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { copy.textContent = "Copied"; }, selectSum); else selectSum();
+    };
+  }
+  function selectSum() { var rg = document.createRange(); rg.selectNodeContents(document.getElementById("sumText")); var s = getSelection(); s.removeAllRanges(); s.addRange(rg); }
+  function summary(item) {
+    var p = PRODUCTS[item.id], w = weekOf(item), adh = adherence(item, 28);
+    var hist = state.checkins.filter(function (c) { return c.product === item.id; }).map(function (c) { return "wk " + c.week + " " + RES[c.result].toLowerCase(); }).join(", ");
+    return '<div class="box"><p class="eyebrow">Summary for your doctor</p><dl class="summary" id="sumText">' +
+      row("Product", p.name) + row("Started", parse(item.start).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })) +
+      row("Used for", w.days + " days (week " + w.week + ")") + (adh !== null ? row("Routine done, last 4 weeks", adh + "% of days") : "") +
+      row("Progress photos", String(state.photos.filter(function (x) { return x.product === item.id; }).length)) + row("Check-ins", hist || "none") + '</dl>' +
+      '<div class="row"><button type="button" class="secondary" id="copySum">Copy summary</button><a class="primary" href="https://bebodywise.com" target="_blank" rel="noopener">Book free consult</a></div></div>';
+  }
+  function row(k, v) { return '<div><dt>' + esc(k) + '</dt><dd class="num">' + esc(v) + '</dd></div>'; }
+
+  // ---------- Setup ----------
+  function renderSetup() {
+    var html = '<div class="sec-title"><p class="eyebrow">Set up</p><h2>Which Bodywise products are you using?</h2></div><div class="pick">';
+    ORDER.forEach(function (id) {
+      var p = PRODUCTS[id], has = !state.demo && state.items.some(function (i) { return i.id === id; });
+      html += '<label for="pick-' + id + '"><input type="checkbox" id="pick-' + id + '" value="' + id + '"' + (has ? " checked" : "") + '>' + pack(id, 44) + '<span class="pn">' + esc(p.name) + '</span><span class="pm">FIRST CHANGES ~ WK ' + p.firstChange + '</span></label>';
+    });
+    html += '</div><label class="field" for="startDate">When did you start?<input type="date" id="startDate" max="' + iso(TODAY) + '" value="' + iso(TODAY) + '"></label>' +
+      '<div class="row"><button type="button" class="primary" id="saveSetup">Start tracking</button>' + (state.items.length ? '<button type="button" class="secondary" id="cancelSetup">Cancel</button>' : "") + '</div>' +
+      '<button type="button" class="link" id="showDemo" style="align-self:flex-start;font-size:13px">See the example instead</button><p id="setupMsg" class="foot" role="status"></p>';
+    panel.appendChild(el(html));
+    document.getElementById("saveSetup").onclick = function () {
+      var ids = Array.prototype.slice.call(panel.querySelectorAll(".pick input:checked")).map(function (x) { return x.value; });
+      var start = document.getElementById("startDate").value || iso(TODAY);
+      if (!ids.length) { document.getElementById("setupMsg").textContent = "Pick at least one product to track."; return; }
+      if (state.demo) state = { demo: false, items: [], checks: {}, photos: [], checkins: [] };
+      state.items = ids.map(function (id) { return state.items.filter(function (i) { return i.id === id; })[0] || { id: id, start: start }; });
+      state.focus = ids[0]; setupOpen = false; tab = "today"; save(); render();
+    };
+    var c = document.getElementById("cancelSetup"); if (c) c.onclick = function () { setupOpen = false; render(); };
+    document.getElementById("showDemo").onclick = function () { state = demoState(); setupOpen = false; tab = "today"; render(); };
+  }
+  function flash(msg) { panel.prepend(el('<div class="note bad" role="alert"><b>' + esc(msg) + '</b></div>')); }
+
+  document.getElementById("tabs").addEventListener("click", function (e) { var b = e.target.closest("button[data-tab]"); if (!b) return; tab = b.dataset.tab; setupOpen = false; render(); });
+  document.getElementById("setupBtn").onclick = function () { setupOpen = true; render(); };
+  document.getElementById("startOwn").onclick = function () { setupOpen = true; render(); };
+
+  // ---------- Static parts ----------
+  document.getElementById("shelf").innerHTML = ["underarm", "lactic-lotion", "hair-serum", "gummies", "pig-cream", "aha-scrub", "glycolic-stick"].map(function (id, i) {
+    var sizes = [64, 70, 82, 84, 74, 72, 62];
+    return '<figure style="width:' + sizes[i] + 'px">' + pack(id, sizes[i]) + '</figure>';
+  }).join("");
+  var PEOPLE = [
+    ["lactic-lotion", "Shabia", "AHA body lotion", "Used one bottle for about six weeks, saw no visible difference and didn't rebuy. Asked for clearer information on how long to use each product.", "TIMELINE: what's normal, week by week"],
+    ["glycolic-stick", "Junaid", "AHA scrub, glycolic stick", "Saw minor improvement but skipped the moisturiser step and found the glycolic stick waxy. Both products are half used on his shelf.", "ROUTINE: paired steps it won't let you skip, plus a thin-layer tip for the stick"],
+    ["gummies", "Zaara", "Hair gummies, 90 days", "Finished the full pack, saw nothing, and won't recommend it. Nobody checked in or suggested a next step.", "CHECK-IN: no change at week 12 goes to a free doctor consult"],
+    ["hair-serum", "Rasheena", "Serum roll-on", "A repeat buyer who likes the product and its packaging. The roll-on leaked when she travelled.", "TODAY: travel tips for roll-ons"],
+    ["hair-serum", "Zain", "Hair growth serum", "Likes it overall and keeps using it. The roller tip makes it easy.", "The customer Be Steady is built to create more of"]
+  ];
+  document.getElementById("people").innerHTML = PEOPLE.map(function (r) {
+    return '<div class="person">' + pack(r[0], 40) + '<div class="who">' + esc(r[1]) + '<small>' + esc(r[2]) + '</small></div><div>' + esc(r[3]) + '<span class="fix">' + esc(r[4]) + '</span></div></div>';
+  }).join("");
+  var srcBox = document.getElementById("sources");
+  SOURCES.forEach(function (s) { var a = document.createElement("a"); a.href = s.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = s.title; srcBox.appendChild(a); });
+
+  render();
+})();
+</script>
+<style>
+/* Pack illustration paint, kept on tokens so packs read in both themes */
+.pk .w { fill: var(--pk-body); stroke: var(--pk-shade); stroke-width: 1; }
+.pk .s { fill: var(--pk-shade); stroke: none; opacity: .7; }
+.pk .b { fill: var(--pk-band); }
+.pk .t { fill: var(--pk-text); font-family: var(--mono); font-size: 5.6px; font-weight: 500; letter-spacing: .02em; }
+.pk .r { stroke: var(--pk-text); stroke-width: .6; opacity: .7; }
+.pk .d { fill: var(--pk-band); opacity: .5; }
+</style>
